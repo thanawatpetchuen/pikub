@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useCallback } from "react";
-import useSWR from "swr";
 
 const fetcher = <T = any>(url: string) => axios.get(url).then((res) => res.data as T);
 

@@ -47,7 +47,7 @@ const App = () => {
   const [currentMessage, setMessage] = useState<Trade>();
   const [user, setUser] = useState(false)
   const symbols = useSymbols()
-  const { isOpen, toggle } = useToggle()
+  const { isOpen } = useToggle()
   const [selectedSymbol, setSelectedSymbol] = useState<string>('xrp')
 
   // useEffect(() => {
@@ -63,7 +63,7 @@ const App = () => {
   console.log({ symbols })
 
   const {
-    sendMessage,
+    // sendMessage,
     lastMessage,
     readyState,
   }: WebSocketHook<MessageEvent<string>> = useWebSocket(`wss://api.bitkub.com/websocket-api/market.trade.thb_${selectedSymbol}`);
