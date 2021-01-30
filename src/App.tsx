@@ -1,45 +1,45 @@
-import axios from 'axios';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+// import axios from 'axios';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { WebSocketHook } from 'react-use-websocket/dist/lib/types';
 import './App.css';
-import { AllSymbol, Ticker } from './model/trade';
+import { Ticker } from './model/trade';
 
 // const noMessage: Trade = {}
 
-const useSymbols = () => {
-  const [symbols, setSymbols] = useState<AllSymbol | undefined>()
+// const useSymbols = () => {
+//   const [symbols, setSymbols] = useState<AllSymbol | undefined>()
 
-  const fetchData = useCallback(async () => {
-    try {
-      const { data } = await axios.get('https://api.bitkub.com/api/market/symbols', {
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        }
-      })
-      setSymbols(data as AllSymbol)
-    } catch (err) {
-      console.log(err)
-    }
-  }, [])
+//   const fetchData = useCallback(async () => {
+//     try {
+//       const { data } = await axios.get('https://api.bitkub.com/api/market/symbols', {
+//         headers: {
+//           'Access-Control-Allow-Origin': '*'
+//         }
+//       })
+//       setSymbols(data as AllSymbol)
+//     } catch (err) {
+//       console.log(err)
+//     }
+//   }, [])
 
-  useEffect(() => {
-    fetchData()
-  }, [fetchData])
+//   useEffect(() => {
+//     fetchData()
+//   }, [fetchData])
 
-  return symbols
-}
+//   return symbols
+// }
 
-const useToggle = () => {
-  const [isOpen, setOpen] = useState(false);
+// const useToggle = () => {
+//   const [isOpen, setOpen] = useState(false);
 
-  const open = useCallback(() => setOpen(true), [])
-  const close = useCallback(() => setOpen(false), [])
-  const toggle = useCallback(() => setOpen(!isOpen), [isOpen])
+//   const open = useCallback(() => setOpen(true), [])
+//   const close = useCallback(() => setOpen(false), [])
+//   const toggle = useCallback(() => setOpen(!isOpen), [isOpen])
 
-  return { isOpen, open, close, toggle }
-}
+//   return { isOpen, open, close, toggle }
+// }
 
 const getLocale = (amount: string = ''): string => {
   return parseFloat(amount).toLocaleString('th-TH')
@@ -49,8 +49,8 @@ const App = () => {
 
   const [currentMessage, setMessage] = useState<Ticker>();
   const [user, setUser] = useState(false)
-  const symbols = useSymbols()
-  const { isOpen } = useToggle()
+  // const symbols = useSymbols()
+  // const { isOpen } = useToggle()
   const [selectedSymbol, setSelectedSymbol] = useState<string>('xrp')
 
   // useEffect(() => {
@@ -105,13 +105,13 @@ const App = () => {
               setSelectedSymbol(sym)
             }
           }}>
-            {isOpen && (
+            {/* {isOpen && (
               <select onChange={({ target: { value } }) => setSelectedSymbol(value)}>
                 {symbols?.result.map((symbol => (
                   <option key={symbol.id} value={symbol.symbol}>{symbol.symbol}</option>
                 )))}
               </select>
-            )}
+            )} */}
             {selectedSymbol.toUpperCase()}
           </div>
         </div>
