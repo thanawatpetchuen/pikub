@@ -124,7 +124,9 @@ const App = () => {
           </div>
         </div>
         <div style={{ marginTop: '20px', width: '100%' }}>
-                  {`High: ${getLocale(currentMessage?.high24hr)}, Low: ${getLocale(currentMessage?.low24hr)}, Changes: ${getLocale(currentMessage?.percentChange)}%`}
+          <span onClick={() => setSell(parseFloat(currentMessage?.high24hr || '0'))}>High: <span style={{ cursor: 'pointer', color: 'lightgreen' }}>{getLocale(currentMessage?.high24hr)}</span>, </span>
+          <span onClick={() => setSell(parseFloat(currentMessage?.low24hr || '0'))}>Low: <span style={{ cursor: 'pointer', color: '#D00000' }}>{getLocale(currentMessage?.low24hr)}</span>, </span>
+          <span>Changes: <span style={{ color: parseFloat(currentMessage?.percentChange || '0') >= 0 ? 'lightgreen' : '#D00000' }}>{getLocale(currentMessage?.percentChange)}%</span></span>
         </div>
         <div style={{ marginTop: '20px', width: '100%' }}>
           <div style={{ display: 'inline-block', width: '33%' }}>
