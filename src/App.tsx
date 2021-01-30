@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { WebSocketHook } from 'react-use-websocket/dist/lib/types';
 import './App.css';
-import { AllSymbol, Trade } from './model/trade';
+import { AllSymbol, Ticker, Trade } from './model/trade';
 
 // const noMessage: Trade = {}
 
@@ -41,9 +41,13 @@ const useToggle = () => {
   return { isOpen, open, close, toggle }
 }
 
+const getLocale = (amount: string = ''): string => {
+  return parseFloat(amount).toLocaleString('th-TH')
+}
+
 const App = () => {
 
-  const [currentMessage, setMessage] = useState<Trade>();
+  const [currentMessage, setMessage] = useState<Ticker>();
   const [user, setUser] = useState(false)
   const symbols = useSymbols()
   const { isOpen } = useToggle()
@@ -63,11 +67,11 @@ const App = () => {
     // sendMessage,
     lastMessage,
     readyState,
-  }: WebSocketHook<MessageEvent<string>> = useWebSocket(`wss://api.bitkub.com/websocket-api/market.trade.thb_${selectedSymbol}`);
+  }: WebSocketHook<MessageEvent<string>> = useWebSocket(`wss://api.bitkub.com/websocket-api/market.ticker.thb_${selectedSymbol}`);
 
   useEffect(() => {
     if (lastMessage?.data) {
-      setMessage(JSON.parse(lastMessage?.data) as Trade)
+      setMessage(JSON.parse(lastMessage?.data) as Ticker)
     }
   }, [lastMessage])
 
@@ -79,7 +83,7 @@ const App = () => {
     [ReadyState.UNINSTANTIATED]: 'Uninstantiated',
   }[readyState];
 
-  const selected = useMemo(() => user ? sellVal : currentMessage?.rat || 0, [currentMessage?.rat, sellVal, user])
+  const selected = useMemo(() => user ? sellVal : parseFloat(currentMessage?.last as string) || 0, [currentMessage?.last, sellVal, user])
 
   const changes = useMemo(() => ((selected - buyVal) / buyVal), [buyVal, selected])
 
@@ -108,7 +112,7 @@ const App = () => {
                 )))}
               </select>
             )}
-            {currentMessage ? currentMessage.sym : null}
+            {selectedSymbol.toUpperCase()}
           </div>
         </div>
         <div style={{ width: '100%' }}>
@@ -116,8 +120,11 @@ const App = () => {
             Current Rate:
           </div>
           <div style={{ display: 'inline-block', width: '50%' }}>
-            {currentMessage ? currentMessage.rat.toLocaleString('th-TH') : null}
+            {currentMessage ? getLocale(currentMessage.last) : null}
           </div>
+        </div>
+        <div style={{ marginTop: '20px', width: '100%' }}>
+                  {`High: ${getLocale(currentMessage?.high24hr)}, Low: ${getLocale(currentMessage?.low24hr)}, Changes: ${getLocale(currentMessage?.percentChange)}%`}
         </div>
         <div style={{ marginTop: '20px', width: '100%' }}>
           <div style={{ display: 'inline-block', width: '33%' }}>

@@ -19,3 +19,17 @@ export interface AllSymbol {
     error: number
     result: Symbol[]
 }
+
+export interface Ticker {
+  stream: string // market.ticker.thb_bch, // stream name
+  id: number; // symbol id
+  last: string;
+  lowestAsk: string;
+  highestBid: string;
+  percentChange: string;
+  baseVolume: string;
+  quoteVolume: string;
+  isFrozen: string;
+  high24hr: string;
+  low24hr: string;
+}
