@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { WebSocketHook } from 'react-use-websocket/dist/lib/types';
 import './App.css';
-import { AllSymbol, Ticker, Trade } from './model/trade';
+import { AllSymbol, Ticker } from './model/trade';
 
 // const noMessage: Trade = {}
 
