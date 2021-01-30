@@ -18,7 +18,6 @@ const useSymbols = () => {
           'Access-Control-Allow-Origin': '*'
         }
       })
-      console.log({ data })
       setSymbols(data as AllSymbol)
     } catch (err) {
       console.log(err)
@@ -60,8 +59,6 @@ const App = () => {
   const [buyVal, setBuy] = useState(0);
   const [sellVal, setSell] = useState(0);
 
-  console.log({ symbols })
-
   const {
     // sendMessage,
     lastMessage,
@@ -69,7 +66,6 @@ const App = () => {
   }: WebSocketHook<MessageEvent<string>> = useWebSocket(`wss://api.bitkub.com/websocket-api/market.trade.thb_${selectedSymbol}`);
 
   useEffect(() => {
-    console.log(lastMessage?.data)
     if (lastMessage?.data) {
       setMessage(JSON.parse(lastMessage?.data) as Trade)
     }
