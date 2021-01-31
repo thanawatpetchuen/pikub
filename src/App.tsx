@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { WebSocketHook } from 'react-use-websocket/dist/lib/types';
 import './App.css';
+import Column, { Row} from './components/Layout';
 import { Ticker } from './model/trade';
 
 // const noMessage: Trade = {}
@@ -71,7 +72,12 @@ const App = () => {
 
   useEffect(() => {
     if (lastMessage?.data) {
-      setMessage(JSON.parse(lastMessage?.data) as Ticker)
+      try {
+        const parsed = JSON.parse(lastMessage?.data) as Ticker
+        setMessage(parsed)
+      } catch (err) {
+        console.log({ err })
+      }
     }
   }, [lastMessage])
 
@@ -95,11 +101,11 @@ const App = () => {
     <div className="App">
       <header className="App-header">
         <span>{connectionStatus}</span>
-        <div style={{ width: '100%' }}>
-          <div style={{ display: 'inline-block', width: '50%' }}>
+        <Row>
+          <Column>
             Symbol:
-          </div>
-          <div style={{ display: 'inline-block', width: '50%' }} onClick={() => {
+          </Column>
+          <Column onClick={() => {
             const sym = prompt('Select currency')
             if (sym) {
               setSelectedSymbol(sym)
@@ -113,61 +119,61 @@ const App = () => {
               </select>
             )} */}
             {selectedSymbol.toUpperCase()}
-          </div>
-        </div>
-        <div style={{ width: '100%' }}>
-          <div style={{ display: 'inline-block', width: '50%' }}>
+          </Column>
+        </Row>
+        <Row>
+          <Column>
             Current Rate:
-          </div>
-          <div style={{ display: 'inline-block', width: '50%' }}>
+          </Column>
+          <Column>
             {currentMessage ? getLocale(currentMessage.last) : null}
-          </div>
-        </div>
-        <div style={{ marginTop: '20px', width: '100%' }}>
+          </Column>
+        </Row>
+        <Row style={{ marginTop: '20px' }}>
           <span onClick={() => setSell(parseFloat(currentMessage?.high24hr || '0'))}>High: <span style={{ cursor: 'pointer', color: 'lightgreen' }}>{getLocale(currentMessage?.high24hr)}</span>, </span>
           <span onClick={() => setSell(parseFloat(currentMessage?.low24hr || '0'))}>Low: <span style={{ cursor: 'pointer', color: '#D00000' }}>{getLocale(currentMessage?.low24hr)}</span>, </span>
           <span>Changes: <span style={{ color: parseFloat(currentMessage?.percentChange || '0') >= 0 ? 'lightgreen' : '#D00000' }}>{getLocale(currentMessage?.percentChange)}%</span></span>
-        </div>
-        <div style={{ marginTop: '20px', width: '100%' }}>
-          <div style={{ display: 'inline-block', width: '33%' }}>
+        </Row>
+        <Row style={{ marginTop: '20px' }}>
+          <Column width={3}>
             Buy
-          </div>
-          <div style={{ display: 'inline-block', width: '33%' }}>
+          </Column>
+          <Column width={3}>
             Sell
             <input type="checkbox" checked={user} onChange={() => setUser(!user)} />
-          </div>
-          <div style={{ display: 'inline-block', width: '33%' }}>
+          </Column>
+          <Column width={3}>
             Change(%)
-          </div>
-        </div>
-        <div style={{ marginTop: '20px', width: '100%' }}>
-          <div style={{ display: 'inline-block', width: '33%' }}>
+          </Column>
+        </Row>
+        <Row style={{ marginTop: '20px' }}>
+          <Column width={3}>
             <input name="in" type="number" placeholder="in" value={buyVal} onChange={({ target: { value } }) => setBuy(parseFloat(value))} />
-          </div>
-          <div style={{ display: 'inline-block', width: '33%' }}>
+          </Column>
+          <Column width={3}>
             <input name="out" type="number" placeholder="out" value={sellVal} onChange={({ target: { value } }) => setSell(parseFloat(value))} />
-          </div>
-          <div style={{ display: 'inline-block', width: '33%' }}>
+          </Column>
+          <Column width={3}>
             {`${(changes * 100).toLocaleString('th-TH')} %`}
-          </div>
-        </div>
-        <div style={{ marginTop: '5px', width: '100%' }}>
+          </Column>
+        </Row>
+        <Row style={{ marginTop: '20px' }}>
           {Array.apply(null, Array(count)).map((_, i) => {
             const index = i
             const currentAmount = start + (step * index)
             return (
               <div key={i}>
-                <div style={{ display: 'inline-block', width: '50%' }}>
+                <Column width={2}>
                   {currentAmount.toLocaleString('th-TH')}
-                </div>
-                <div style={{ display: 'inline-block', width: '50%' }}>
+                </Column>
+                <Column width={2}>
                   {(currentAmount * changes).toLocaleString('th-TH')} BHT
-                </div>
+                </Column>
               </div>
             )
           })}
 
-        </div>
+        </Row>
       </header>
     </div>
   );
