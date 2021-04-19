@@ -20,7 +20,7 @@ export interface AllSymbol {
     result: Symbol[]
 }
 
-export interface Ticker {
+export interface StreamTicker {
   stream: string // market.ticker.thb_bch, // stream name
   id: number; // symbol id
   last: string;
@@ -32,4 +32,17 @@ export interface Ticker {
   isFrozen: string;
   high24hr: string;
   low24hr: string;
+}
+export interface Ticker {
+  stream: string // market.ticker.thb_bch, // stream name
+  id: number; // symbol id
+  last: number;
+  lowestAsk: number;
+  highestBid: number;
+  percentChange: number;
+  baseVolume: number;
+  quoteVolume: number;
+  isFrozen: string;
+  high24hr: number;
+  low24hr: number;
 }
