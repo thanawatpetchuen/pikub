@@ -17,10 +17,11 @@ const useTicker = (selectedSymbol: string) => {
 
     const {
         // sendMessage,
-        // lastMessage,
         readyState,
         lastJsonMessage,
-    }: WebSocketHook<MessageEvent<string>> = useWebSocket(`wss://api.bitkub.com/websocket-api/market.ticker.thb_${selectedSymbol}`);
+    }: WebSocketHook<MessageEvent<string>> = useWebSocket(`wss://api.bitkub.com/websocket-api/market.ticker.thb_${selectedSymbol}`, {
+        shouldReconnect: (closeEvent) => true,
+    });
 
     const connectionStatus = useMemo(() => {
         return status[readyState]
