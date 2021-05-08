@@ -1,18 +1,19 @@
-// import axios from 'axios';
-import React from 'react';
+import React from "react";
+import { RecoilRoot } from "recoil";
 
-import './App.css';
-import { Background } from './components/Background';
-import Home from './pages/Home';
+import { Background } from "./components/Background";
+import Home from "./pages/Home";
+
+import "./App.css";
 
 const App = () => {
- 
-
   return (
-    <Background>
-      <Home />
-    </Background>
+    <RecoilRoot>
+      <Background>
+        <Home />
+      </Background>
+    </RecoilRoot>
   );
-}
+};
 
 export default App;
