@@ -1,16 +1,17 @@
 import React from "react";
+import { useRecoilValue } from "recoil";
+
 import { Column, Row } from "../../components/Layout";
 import Symbol from "../../components/Symbol";
-import { SYMBOLS } from "../../model/symbol";
-
-const AVAILABLE_SYMBOLS = Object.values(SYMBOLS);
+import { symbolsState } from "../../recoil";
 
 const Home = () => {
+  const symbols = useRecoilValue(symbolsState)
   return (
     <Row>
-      {AVAILABLE_SYMBOLS.map((s, i) => (
+      {symbols.map((s, i) => (
         <Column key={i}>
-          <Symbol name={s} />
+          <Symbol name={s} position={i} />
         </Column>
       ))}
     </Row>
