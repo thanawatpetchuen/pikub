@@ -13,16 +13,17 @@ export const Row = styled.div`
   width: 100%;
 `;
 
-const blink = keyframes`
-  50% { border-color:gold ; }
+const blink = (color: string) => keyframes`
+  50% { border-color:${color} ; }
 `;
 
-const blinkCSS = css`
-  animation: ${blink} 1s infinite;
+const blinkCSS = (color = 'gold') => css`
+  animation: ${blink(color)} 1s infinite;
 `;
 
 interface IContainer {
   isBlink?: boolean;
+  blinkColor?: string;
 }
 
 export const Container = styled.div<IContainer>`
@@ -36,9 +37,9 @@ export const Container = styled.div<IContainer>`
   padding: 5rem;
   margin: 1rem 0.5rem 1rem 0.5rem;
 
-  ${({ isBlink }) => {
+  ${({ isBlink, blinkColor }) => {
     if (isBlink) {
-      return blinkCSS;
+      return blinkCSS(blinkColor);
     }
   }}
 `;

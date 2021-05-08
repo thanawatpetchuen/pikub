@@ -727,6 +727,12 @@ module.exports = function (webpackEnv) {
             ...(!hasJsxRuntime && {
               "react/react-in-jsx-scope": "error",
             }),
+            "react-hooks/rules-of-hooks": "error",
+            "react-hooks/exhaustive-deps": [
+              "warn", {
+                "additionalHooks": "useRecoilCallback"
+              }
+            ]
           },
         },
       }),

@@ -1,14 +1,14 @@
 {
   "name": "notember-ts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "axios": "0.21.1",
-    "mobx": "6.1.4",
-    "mobx-react-lite": "3.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-use-websocket": "2.4.0",
+    "recoil": "0.2.0",
+    "recoil-persist": "2.5.0",
     "styled-components": "5.2.1",
     "swr": "0.4.1",
     "typescript": "4.0.3"
